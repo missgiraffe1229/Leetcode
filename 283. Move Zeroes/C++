@@ -1,0 +1,53 @@
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Example:
+
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+
+Solution One：
+第一反应是遍历数组，将非零元素存入新的数组中，之后剩下元素置为0.
+虽然这么想很只管，但这种情况空间复杂度并不友好。
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        vector<int> nonzero;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i])
+                nonzero.push_back(nums[i]);
+        }
+        for(int i = 0; i < nonzero.size(); i++)
+        {
+            nums[i] = nonzero[i];
+        }
+        for(int i = nonzero.size(); i < nums.size(); i++)
+        {
+            nums[i] = 0;
+        }
+    }
+};
+
+Solution Two：
+设置双指针，i负责遍历数组，k负责永远在已经排序好的数组的最后一位。
+当nums[i]==0时，k++，nums[i]和nums[k]互换位置。
+当nums[i]!=0时，k不变，i++向后寻找到第一个不为零的元素，之后和nums[k++]互换位置。
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+       for(int i = 0,k = 0; i < nums.size(); i++)
+       {
+           if(nums[i])
+               if(i != k)
+               {
+                   swap(nums[i], nums[k]);
+                   k++;
+               }
+           else
+               k++;
+            
+       }
+    }
+};
