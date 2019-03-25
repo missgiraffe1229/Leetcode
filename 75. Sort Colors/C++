@@ -1,0 +1,31 @@
+Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+Note: You are not suppose to use the library's sort function for this problem.
+
+Example:
+
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+
+Solution One:
+因为只有0，1和2，所以直观地想，只需要统计出数组中含有多少个0，1和2就可以了，然后按照顺序排放到数组中。
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int count[3] = {0};
+        for(int i =0; i < nums.size(); i++)
+        {
+            assert(nums[i]>=0 && nums[i]<=2);
+            count[nums[i]]++;
+        }
+        int index = 0;
+        for(int i = 0; i < count[0]; i++)
+            nums[index++] = 0;
+        for(int i = 0; i < count[1]; i++)
+            nums[index++] = 1;
+        for(int i = 0; i < count[2]; i++)
+            nums[index++] = 2;
+    }
+};
